@@ -37,7 +37,7 @@
             <td>Doe</td>
             <td>01/01/1980</td>
             <td>
-                <a href="user.php">
+                <a href="#">
                     <i class="fas fa-edit"></i>
                 </a>
                 <a href="#">
@@ -51,7 +51,7 @@
             <td>Doe</td>
             <td>02/01/1985</td>
             <td>
-                <a href="user.php">
+                <a href="#">
                     <i class="fas fa-edit"></i>
                 </a>
                 <a href="#">
@@ -65,7 +65,7 @@
             <td></td>
             <td></td>
             <td>
-                <a href="user.php">
+                <a href="#">
                     <i class="fas fa-plus"></i>
                 </a>
             </td>
