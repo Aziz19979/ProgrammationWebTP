@@ -1,14 +1,27 @@
 
+CREATE SEQUENCE book_book_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE book (
-                      book_id INTEGER NOT NULL,
+                      book_id INTEGER NOT NULL DEFAULT nextval('book_book_id_seq'::regclass),
                       book_title VARCHAR(2560) NOT NULL,
                       book_authors VARCHAR(256) NOT NULL,
                       CONSTRAINT book_id PRIMARY KEY (book_id)
 );
 
+CREATE SEQUENCE person_person_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 CREATE TABLE person (
-                        person_id INTEGER NOT NULL,
+                        person_id INTEGER NOT NULL DEFAULT nextval('person_person_id_seq'::regclass),
                         person_birthdate DATE NOT NULL,
                         person_firstname VARCHAR(128) NOT NULL,
                         person_lastname VARCHAR(128) NOT NULL,
