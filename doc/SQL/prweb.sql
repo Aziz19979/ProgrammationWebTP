@@ -52,3 +52,24 @@ ALTER TABLE borrow ADD CONSTRAINT person_borrow_fk
         ON DELETE NO ACTION
         ON UPDATE NO ACTION
         NOT DEFERRABLE;
+
+
+CREATE SEQUENCE manager_manager_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+-- manager have username and password and can login to the site
+--  username is unique
+
+CREATE TABLE manager (
+                        manager_id INTEGER NOT NULL DEFAULT nextval('manager_manager_id_seq'::regclass),
+                        manager_username VARCHAR(128) NOT NULL,
+                        manager_password VARCHAR(128) NOT NULL,
+                        CONSTRAINT manager_id PRIMARY KEY (manager_id)
+);
+
+CREATE UNIQUE INDEX manager_username_uindex
+    ON manager (manager_username);

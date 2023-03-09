@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(originPatterns = "*")
 public class PersonController {
     @Autowired
     private PersonService personService;
