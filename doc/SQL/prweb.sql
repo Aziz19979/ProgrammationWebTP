@@ -1,4 +1,6 @@
-
+-- drop public schema and recreate it
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
 CREATE SEQUENCE book_book_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -54,22 +56,23 @@ ALTER TABLE borrow ADD CONSTRAINT person_borrow_fk
         NOT DEFERRABLE;
 
 
-CREATE SEQUENCE manager_manager_id_seq
+CREATE SEQUENCE user_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
--- manager have username and password and can login to the site
+-- user have username and password and can login to the site
 --  username is unique
 
-CREATE TABLE manager (
-                        manager_id INTEGER NOT NULL DEFAULT nextval('manager_manager_id_seq'::regclass),
-                        manager_username VARCHAR(128) NOT NULL,
-                        manager_password VARCHAR(128) NOT NULL,
-                        CONSTRAINT manager_id PRIMARY KEY (manager_id)
+CREATE TABLE users (
+                        id INTEGER NOT NULL DEFAULT nextval('user_id_seq'::regclass),
+                        username VARCHAR(128) NOT NULL,
+                        password VARCHAR(128) NOT NULL,
+                        admin BOOLEAN NOT NULL DEFAULT FALSE,
+                        CONSTRAINT users_pk PRIMARY KEY (id)
 );
 
-CREATE UNIQUE INDEX manager_username_uindex
-    ON manager (manager_username);
+CREATE UNIQUE INDEX user_username_uindex
+    ON users (username);
