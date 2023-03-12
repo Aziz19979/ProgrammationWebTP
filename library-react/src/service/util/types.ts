@@ -1,4 +1,4 @@
-import {GridColType} from "@mui/x-data-grid";
+import {GridColType, GridValueGetterParams} from "@mui/x-data-grid";
 
 export interface FieldInterface {
     /**************************  Common parameters **************************/
@@ -21,6 +21,6 @@ export interface FieldInterface {
     visible?: boolean;
 
     width?: number;
-
+    valueGetter?: (params: GridValueGetterParams<any, any>) => any;
     valueFormatter?: (value: any) => string;
 }

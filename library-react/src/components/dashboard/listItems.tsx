@@ -27,11 +27,11 @@ export const MainListItems = () => {
                 </ListItemIcon>
                 <ListItemText primary="Books"/>
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate("/persons")}>
                 <ListItemIcon>
                     <PeopleIcon/>
                 </ListItemIcon>
-                <ListItemText primary="Customers"/>
+                <ListItemText primary="Persons"/>
             </ListItemButton>
             <ListItemButton>
                 <ListItemIcon>

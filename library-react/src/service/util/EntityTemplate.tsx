@@ -28,6 +28,7 @@ export default class EntityTemplate {
                 type: field.gridColType ? field.gridColType : undefined,
                 visible: field.visible ? field.visible : true,
                 width: field.width ? field.width : 150,
+                valueGetter: field.valueGetter ? field.valueGetter : undefined,
                 valueFormatter: field.valueFormatter ? field.valueFormatter : undefined,
             }
         });
