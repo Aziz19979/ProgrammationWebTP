@@ -39,11 +39,11 @@ export const MainListItems = () => {
                 </ListItemIcon>
                 <ListItemText primary="Persons"/>
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate("/borrows")}>
                 <ListItemIcon>
                     <BarChartIcon/>
                 </ListItemIcon>
-                <ListItemText primary="Reports"/>
+                <ListItemText primary="Borrows"/>
             </ListItemButton>
             <ListItemButton>
                 <ListItemIcon>

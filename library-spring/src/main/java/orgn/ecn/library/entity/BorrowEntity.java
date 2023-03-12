@@ -22,6 +22,10 @@ public class BorrowEntity {
     @Column(name = "borrow_return", nullable = false)
     private Date borrowReturn;
     @Basic
+    @Column(name = "finish_reading", nullable = false)
+    private Boolean finishReading;
+
+    @Basic
     @Column(name = "person_id", nullable = false)
     private Integer personId;
     @Basic

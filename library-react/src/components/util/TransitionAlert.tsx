@@ -15,6 +15,13 @@ interface TransitionAlertProps {
 export default function TransitionAlert(props: TransitionAlertProps) {
     const [open, setOpen] = React.useState(true);
 
+    React.useEffect(() => {
+        setTimeout(() => {
+            setOpen(false);
+            props.setMessage('');
+        }, 5000);
+    }, [props.message]);
+
     return (
         <Box sx={{width: '100%'}}>
             <Collapse in={open}>

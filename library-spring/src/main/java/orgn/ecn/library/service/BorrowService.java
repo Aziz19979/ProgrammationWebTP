@@ -43,11 +43,9 @@ public class BorrowService {
     private void fillBorrow(BorrowEntity borrow, Map<String, Object> request) throws RequestParseException {
         borrow.setBorrowDate(RequestParser.getAsDate(request.get("borrowDate")));
         borrow.setBorrowReturn(RequestParser.getAsDate(request.get("borrowReturn")));
+        borrow.setFinishReading(RequestParser.getAsBoolean(request.get("finishReading")));
         borrow.setPersonId(RequestParser.getAsInteger(request.get("personId")));
         borrow.setBookId(RequestParser.getAsInteger(request.get("bookId")));
-
-
-
     }
 
     public void deleteBorrow(Integer id) {
