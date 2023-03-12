@@ -22,6 +22,10 @@ public class UserEntity {
     private String password;
 
     @Basic
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Basic
     @Column(name = "admin", nullable = false)
     private boolean admin;
 }

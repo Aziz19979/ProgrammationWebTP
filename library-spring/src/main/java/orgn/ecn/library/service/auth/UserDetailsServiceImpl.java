@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import orgn.ecn.library.config.auth.MyUserDetails;
 import orgn.ecn.library.entity.UserEntity;
 import orgn.ecn.library.repository.UserRepository;
 
@@ -25,8 +26,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User Login:  " + username + " not found");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                getGrantedAuthority(user));
+        return new MyUserDetails(user.getUsername(), user.getPassword(),
+                getGrantedAuthority(user), user);
     }
 
     private List<GrantedAuthority> getGrantedAuthority(UserEntity user) {

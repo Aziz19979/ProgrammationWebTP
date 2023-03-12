@@ -15,7 +15,6 @@ export default function PersonList() {
                 setLoading(false);
             })
             .catch((error) => {
-                console.log(error);
                 setError(error);
                 setLoading(false);
             });

@@ -70,9 +70,20 @@ CREATE TABLE users (
                         id INTEGER NOT NULL DEFAULT nextval('user_id_seq'::regclass),
                         username VARCHAR(128) NOT NULL,
                         password VARCHAR(128) NOT NULL,
+                        email VARCHAR(128) NOT NULL,
                         admin BOOLEAN NOT NULL DEFAULT FALSE,
                         CONSTRAINT users_pk PRIMARY KEY (id)
 );
 
 CREATE UNIQUE INDEX user_username_uindex
     ON users (username);
+
+-- insert default admin user
+-- password is admin encrypted with bcrypt
+INSERT INTO users (username, password, email, admin)
+Values ('admin', '$2a$10$tR4NMaRiVG.QZdXoCsmEUuDltA7Siy0kisCbUwT3p3P3s9wQWdySi', 'admin@localhost', TRUE);
+
+-- insert default user
+-- password is user encrypted with bcrypt
+INSERT INTO users (username, password, email, admin)
+Values ('user', '$2a$10$nbNEAKss3/jeNdOPfCqel.cLltnDIfE15jpGFEo7rZw1aY/5nAbzi', 'user@localhost', FALSE);

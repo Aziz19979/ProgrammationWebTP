@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import orgn.ecn.library.config.auth.JwtTokenFilter;
 import orgn.ecn.library.config.auth.JwtTokenProvider;
@@ -55,7 +56,7 @@ public class UserResourceImpl {
      * @see JwtTokenFilter#doFilterInternal(HttpServletRequest, HttpServletResponse, FilterChain)
      * returned token must be used in header as value with key: 'Authorization' for any further request on server
      */
-    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/api/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> authenticate(@RequestBody UserEntity user) {
         log.info("UserResourceImpl : authenticate");
         // encrypted "admin" : $2a$10$tR4NMaRiVG.QZdXoCsmEUuDltA7Siy0kisCbUwT3p3P3s9wQWdySi
@@ -65,20 +66,9 @@ public class UserResourceImpl {
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
             if (authentication.isAuthenticated()) {
-                String username = user.getUsername();
-                jsonObject.put("name", authentication.getName());
-                jsonObject.put("authorities", authentication.getAuthorities());
-
-                Role role = new Role();
-                if (user.isAdmin()) {
-                    role.setId(1L);
-                    role.setName("ADMIN");
-                } else {
-                    role.setId(2L);
-                    role.setName("USER");
-                }
-
-                jsonObject.put("token", tokenProvider.createToken(username, role));
+                jsonObject.put("username", authentication.getName());
+                jsonObject.put("roles", authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toArray());
+                jsonObject.put("token", tokenProvider.createToken(authentication));
                 return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
             }
         } catch (JSONException e) {
