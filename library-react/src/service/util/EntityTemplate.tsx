@@ -3,23 +3,27 @@ import {GridColDef, GridRowsProp} from "@mui/x-data-grid";
 import {FieldInterface} from "./types";
 
 export default class EntityTemplate {
+    isReadOnly: boolean = false;
     entityLabel: string;
+    entityLabelPlural: string;
     crudActions: CrudActions;
 
     entityIdentifier: FieldInterface;
 
     fields: FieldInterface[];
 
-    constructor(entityLabel: string, baseEntityUrl: string, id: FieldInterface, fields: FieldInterface[]) {
+    constructor(entityLabel: string,
+                entityLabelPlural: string,
+                baseEntityUrl: string,
+                id: FieldInterface,
+                fields: FieldInterface[]) {
         this.entityLabel = entityLabel;
+        this.entityLabelPlural = entityLabelPlural;
         this.crudActions = new CrudActions(baseEntityUrl);
         this.entityIdentifier = id;
         this.fields = fields;
     }
-    // valueSetter: (params: GridValueSetterParams) => {
-    //       const [firstName, lastName] = params.value!.toString().split(' ');
-    //       return { ...params.row, firstName, lastName };
-    //     },
+
     convertFieldsToGridColumns(): GridColDef[] {
         return this.fields.map((field) => {
             return {
@@ -30,6 +34,7 @@ export default class EntityTemplate {
                 width: field.width ? field.width : 150,
                 valueGetter: field.valueGetter ? field.valueGetter : undefined,
                 valueFormatter: field.valueFormatter ? field.valueFormatter : undefined,
+                valueOptions: field.valueOptions ? field.valueOptions : undefined,
             }
         });
     }

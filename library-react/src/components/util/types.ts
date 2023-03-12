@@ -2,7 +2,8 @@ import EntityTemplate from "../../service/util/EntityTemplate";
 import {GridRowParams} from "@mui/x-data-grid";
 
 export interface CrudTableProps {
-    entityTemplate: EntityTemplate
+    entityTemplate: EntityTemplate,
+    readOnly?: boolean,
 }
 
 

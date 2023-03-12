@@ -1,4 +1,6 @@
 import {GridColType, GridValueGetterParams} from "@mui/x-data-grid";
+import {ValueOptions} from "@mui/x-data-grid/models/colDef/gridColDef";
+import {GridValueOptionsParams} from "@mui/x-data-grid/models/params/gridValueOptionsParams";
 
 export interface FieldInterface {
     /**************************  Common parameters **************************/
@@ -23,4 +25,7 @@ export interface FieldInterface {
     width?: number;
     valueGetter?: (params: GridValueGetterParams<any, any>) => any;
     valueFormatter?: (value: any) => string;
+
+    // if type is gridColType is single-select, then value options is required
+    valueOptions?: Array<ValueOptions> | ((params: GridValueOptionsParams) => Array<ValueOptions>);
 }

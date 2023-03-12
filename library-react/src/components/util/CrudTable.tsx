@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {
     DataGrid,
-    GridActionsCellItem,
+    GridActionsCellItem, GridAddIcon,
     GridColDef,
-    GridRowId,
-    GridRowModes,
     GridRowParams,
     GridRowsProp
 } from "@mui/x-data-grid";
@@ -14,12 +12,13 @@ import {CrudTableProps} from "./types";
 import DeleteIcon from '@mui/icons-material/Delete';
 import SecurityIcon from '@mui/icons-material/Security';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import {red} from "@mui/material/colors";
 import TransitionAlert from "./TransitionAlert";
 import DeleteEntityDialog from "./DeleteEntityDialog";
+import {IconButton, Typography} from "@mui/material";
 
 export default function CrudTable(props: CrudTableProps) {
     const entityTemplate = props.entityTemplate;
+    const readOnly = props.readOnly;
 
     const [loading, setLoading] = React.useState<boolean>(false);
     const [error, setError] = React.useState<string | null>(null);
@@ -55,14 +54,14 @@ export default function CrudTable(props: CrudTableProps) {
         }).finally(() => {
             setLoading(false);
         });
-    }, [entityTemplate, rows]);
+    }, [entityTemplate]);
 
     const showDeleteEntityDialog = React.useCallback((targetRow: GridRowParams) => {
         return () => {
             setTargetRow(targetRow);
             setDeleteDialogOpen(true);
         }
-    }, [entityTemplate, rows]);
+    }, []);
 
     const updateEntity = React.useCallback((targetRow: GridRowParams) => {
         return () => {
@@ -85,7 +84,7 @@ export default function CrudTable(props: CrudTableProps) {
                 setLoading(false);
             });
         }
-    }, [entityTemplate, rows]);
+    }, [entityTemplate]);
 
     const copyEntity = React.useCallback((targetRow: GridRowParams) => {
         return () => {
@@ -102,38 +101,47 @@ export default function CrudTable(props: CrudTableProps) {
                 setLoading(false);
             });
         }
-    }, [entityTemplate, rows]);
+    }, [entityTemplate]);
 
 
     const columns = React.useMemo<GridColDef[]>(
-        () => [
-            ...entityTemplate.convertFieldsToGridColumns(),
-            {
-                field: 'actions',
-                type: 'actions',
-                width: 80,
-                getActions: (params) => [
-                    <GridActionsCellItem
-                        icon={<DeleteIcon/>}
-                        label="Delete"
-                        onClick={showDeleteEntityDialog(params)}
-                    />,
-                    <GridActionsCellItem
-                        icon={<SecurityIcon/>}
-                        label="Update Entity"
-                        onClick={updateEntity(params)}
-                        showInMenu
-                    />,
-                    <GridActionsCellItem
-                        icon={<FileCopyIcon/>}
-                        label="Duplicate Entity"
-                        onClick={copyEntity(params)}
-                        showInMenu
-                    />,
-                ],
-            },
-        ],
-        [entityTemplate, showDeleteEntityDialog, updateEntity, copyEntity],
+        () => {
+            if (readOnly) {
+                return [
+                    ...entityTemplate.convertFieldsToGridColumns()
+                ]
+            } else return [
+                ...entityTemplate.convertFieldsToGridColumns(),
+                {
+                    field: 'actions',
+                    type: 'actions',
+                    width: 80,
+                    getActions: (params) => [
+                        <GridActionsCellItem
+                            key="delete"
+                            icon={<DeleteIcon/>}
+                            label="Delete"
+                            onClick={showDeleteEntityDialog(params)}
+                        />,
+                        <GridActionsCellItem
+                            key="update"
+                            icon={<SecurityIcon/>}
+                            label="Update Entity"
+                            onClick={updateEntity(params)}
+                            showInMenu
+                        />,
+                        <GridActionsCellItem
+                            key="copy"
+                            icon={<FileCopyIcon/>}
+                            label="Duplicate Entity"
+                            onClick={copyEntity(params)}
+                            showInMenu
+                        />,
+                    ],
+                }
+            ]
+        },
+        [readOnly, entityTemplate, showDeleteEntityDialog, updateEntity, copyEntity],
     );
 
     return (
@@ -145,21 +153,39 @@ export default function CrudTable(props: CrudTableProps) {
                         p: 2,
                         display: 'flex',
                         flexDirection: 'column',
-                        height: 240,
+                        height: 120,
                     }}
                 >
+                    <Typography variant="h6" gutterBottom component="div">
+                        List of {entityTemplate.entityLabelPlural}
+                    </Typography>
+                    <Typography variant="h6" gutterBottom component="div">
+                        Total: {rows.length}
+                    </Typography>
                 </Paper>
             </Grid>
             {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
+            <Grid item xs={12} md={4} lg={3} hidden={readOnly}>
                 <Paper
                     sx={{
                         p: 2,
                         display: 'flex',
                         flexDirection: 'column',
-                        height: 240,
+                        height: 120,
                     }}
                 >
+                    <Typography variant="h6" gutterBottom component="div">
+                        {entityTemplate.entityLabel} Actions
+                    </Typography>
+                    <IconButton
+                        aria-label="create"
+                        onClick={() => {
+                            console.log("create")
+                        }}
+                    >
+                        <GridAddIcon/>
+                        Create a new {entityTemplate.entityLabel}
+                    </IconButton>
                 </Paper>
             </Grid>
             {/* Recent Orders */}

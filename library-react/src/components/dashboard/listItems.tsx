@@ -27,6 +27,12 @@ export const MainListItems = () => {
                 </ListItemIcon>
                 <ListItemText primary="Books"/>
             </ListItemButton>
+            <ListItemButton onClick={() => navigate("/book_genres")}>
+                <ListItemIcon>
+                    <MenuBookIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Book Genre"/>
+            </ListItemButton>
             <ListItemButton onClick={() => navigate("/persons")}>
                 <ListItemIcon>
                     <PeopleIcon/>
