@@ -20,12 +20,17 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+    @GetMapping("/books/{id}")
+    public BookEntity getBook(@PathVariable("id") final Integer id) {
+        return bookService.getBook(id);
+    }
+
     @PostMapping("/books")
     public BookEntity createBook(@RequestBody Map<String, Object> request) throws RequestParseException {
         return bookService.createBook(request);
     }
 
-    @PutMapping("/books/{id}")
+    @PatchMapping("/books/{id}")
     public BookEntity updateBook(@PathVariable("id") final Integer id, @RequestBody Map<String, Object> request) throws RequestParseException {
         return bookService.updateBook(id, request);
     }

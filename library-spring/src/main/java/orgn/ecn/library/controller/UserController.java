@@ -25,7 +25,7 @@ public class UserController {
         return userService.createUser(request);
     }
 
-    @PutMapping("/users/{id}")
+    @PatchMapping("/users/{id}")
     public UserEntity updateUser(@PathVariable("id") final Integer id, @RequestBody Map<String, Object> request) throws RequestParseException {
         return userService.updateUser(id, request);
     }

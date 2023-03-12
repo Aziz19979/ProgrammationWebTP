@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import MyCopyright from "../footer/MyCopyright";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAuth} from "../../service/auth/AuthProvider";
+import TransitionAlert from "../util/TransitionAlert";
 
 export default function SignIn() {
     const [error, setError] = React.useState<string | null>(null);
@@ -113,7 +114,7 @@ export default function SignIn() {
                     }
 
                     {/*display error message based on error state */}
-                    {error && <p style={{color: 'red'}}>{error}</p>}
+                    {error && <TransitionAlert message={error} setMessage={setError} severity={"error"}/>}
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">

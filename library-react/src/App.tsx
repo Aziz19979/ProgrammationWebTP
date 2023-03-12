@@ -6,6 +6,8 @@ import SignIn from "./components/auth/SignIn";
 import MyDashboard from "./components/dashboard/MyDashboard";
 import AppLayout from "./AppLayout";
 import NotFoundPage from "./components/NotFoundPage";
+import CrudTable from "./components/util/CrudTable";
+import bookEntity from "./service/book/BookEntity";
 
 function App() {
     return (
@@ -22,7 +24,9 @@ function App() {
                                     <MyDashboard/>
                                 </RequireAuth>
                             }
-                        />
+                        >
+                            <Route path={"/books"} element={<CrudTable entityTemplate={bookEntity}/>}/>
+                        </Route>
                     </Route>
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>

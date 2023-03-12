@@ -22,6 +22,11 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    public BookEntity getBook(Integer id) {
+        Optional<BookEntity> optionalBook = bookRepository.findById(id);
+        return optionalBook.orElse(null);
+    }
+
     public BookEntity createBook(Map<String, Object> request) throws RequestParseException {
         BookEntity book = new BookEntity();
         fillBook(book, request);
@@ -43,6 +48,7 @@ public class BookService {
     private void fillBook(BookEntity book, Map<String, Object> request) throws RequestParseException {
         book.setBookTitle(RequestParser.getAsString(request.get("bookTitle")));
         book.setBookAuthors(RequestParser.getAsString(request.get("bookAuthors")));
+        book.setBookGenreId(RequestParser.getAsInteger(request.get("bookGenreId")));
     }
 
     public void deleteBook(Integer id) {

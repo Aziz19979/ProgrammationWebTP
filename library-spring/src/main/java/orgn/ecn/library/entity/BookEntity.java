@@ -16,7 +16,7 @@ public class BookEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "book_id", nullable = false)
-    private int bookId;
+    private Integer bookId;
     @Basic
     @Column(name = "book_title", nullable = false, length = 2560)
     private String bookTitle;
@@ -26,7 +26,7 @@ public class BookEntity {
 
     @Basic
     @Column(name = "book_genre_id", nullable = false)
-    private int bookGenreId;
+    private Integer bookGenreId;
 
     @JsonIgnore
     @ManyToOne
@@ -37,6 +37,6 @@ public class BookEntity {
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<BorrowEntity> borrows;
 }

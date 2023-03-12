@@ -16,7 +16,7 @@ public class PersonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "person_id", nullable = false)
-    private int personId;
+    private Integer personId;
     @Basic
     @Column(name = "person_birthdate", nullable = false)
     private Date personBirthdate;
@@ -28,6 +28,6 @@ public class PersonEntity {
     private String personLastname;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<BorrowEntity> borrows;
 }

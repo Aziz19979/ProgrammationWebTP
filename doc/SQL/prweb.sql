@@ -43,6 +43,8 @@ VALUES (1, 'Action and Adventure'),
        (22, 'Western'),
        (23, 'Young Adult');
 
+SELECT setval('book_genre_book_genre_id_seq', 23, true);
+
 
 CREATE SEQUENCE book_book_id_seq
     START WITH 1
@@ -115,6 +117,7 @@ VALUES (1, 'The Lord of the Rings', 'J. R. R. Tolkien', 1),
        (45, 'The Adventures of Sherlock Holmes', 'Arthur Conan Doyle', 23),
        (46, 'The Adventures of Tom Sawyer', 'Mark Twain', 23);
 
+SELECT setval('book_book_id_seq', 46, true);
 
 CREATE SEQUENCE person_person_id_seq
     START WITH 1
@@ -161,10 +164,19 @@ VALUES (1, '1981-01-01', 'Adam', 'Smith'),
        (26, '2006-01-01', 'John', 'Doe'),
        (27, '2007-01-01', 'Jane', 'Doe');
 
+SELECT setval('person_person_id_seq', 27, true);
 
+
+
+CREATE SEQUENCE borrow_borrow_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 CREATE TABLE borrow (
-                        borrow_id INTEGER NOT NULL,
+                        borrow_id INTEGER NOT NULL DEFAULT nextval('borrow_borrow_id_seq'::regclass),
                         borrow_date DATE NOT NULL,
                         borrow_return DATE NOT NULL,
                         person_id INTEGER NOT NULL,
@@ -187,13 +199,6 @@ ALTER TABLE borrow ADD CONSTRAINT person_borrow_fk
         ON UPDATE NO ACTION
         NOT DEFERRABLE;
 
-
-CREATE SEQUENCE user_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
 
 -- feed initial borrow data
 INSERT INTO borrow (borrow_id, borrow_date, borrow_return, person_id, book_id)
@@ -225,6 +230,16 @@ VALUES (1, '2015-01-01', '2015-01-15', 1, 1),
        (26, '2015-01-01', '2015-01-15', 26, 26),
        (27, '2015-01-01', '2015-01-15', 27, 27);
 
+SELECT setval('borrow_borrow_id_seq', 27, true);
+
+
+CREATE SEQUENCE user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 -- user have username and password and can login to the site
 --  username is unique
 
@@ -249,3 +264,5 @@ Values ('admin', '$2a$10$tR4NMaRiVG.QZdXoCsmEUuDltA7Siy0kisCbUwT3p3P3s9wQWdySi',
 -- password is user encrypted with bcrypt
 INSERT INTO users (username, password, email, admin)
 Values ('user', '$2a$10$nbNEAKss3/jeNdOPfCqel.cLltnDIfE15jpGFEo7rZw1aY/5nAbzi', 'user@localhost', FALSE);
+
+SELECT setval('user_id_seq', 2, true);

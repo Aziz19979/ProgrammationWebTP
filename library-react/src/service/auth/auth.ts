@@ -24,6 +24,7 @@ const libraryAuthProvider = {
            onFailureCallback: (error: string) => void) {
         axios.post(API_URL + '/api/login', user).then(r => {
                 localStorage.setItem('library-token', r.data.token);
+                libraryAxios.defaults.headers.common['Authorization'] = `${r.data.token}`;
                 onSuccessCallback(createUserDataFromLibraryToken(r.data.token));
             }
         ).catch(e => {
@@ -46,6 +47,7 @@ const libraryAuthProvider = {
         const token = localStorage.getItem('library-token');
         if (token) {
             const refreshedUser = createUserDataFromLibraryToken(token);
+            libraryAxios.defaults.headers.common['Authorization'] = `${token}`;
             if (refreshedUser.expiresAt > Date.now() / 1000) {
                 // token not expired => return user
                 return refreshedUser;
@@ -64,4 +66,13 @@ const libraryAuthProvider = {
     }
 };
 
-export {libraryAuthProvider};
+const libraryAxios = axios.create({
+    baseURL: API_URL,
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        Authorization: `${localStorage.getItem('library-token')}`,
+    }
+});
+
+export {libraryAuthProvider, libraryAxios};

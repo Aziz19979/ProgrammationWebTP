@@ -25,7 +25,7 @@ public class BorrowController {
         return borrowService.createBorrow(request);
     }
 
-    @PutMapping("/borrows/{id}")
+    @PatchMapping("/borrows/{id}")
     public BorrowEntity updateBorrow(@PathVariable("id") final Integer id, @RequestBody Map<String, Object> request) throws RequestParseException {
         return borrowService.updateBorrow(id, request);
     }

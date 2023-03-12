@@ -25,7 +25,7 @@ public class PersonController {
         return personService.createPerson(request);
     }
 
-    @PutMapping("/persons/{id}")
+    @PatchMapping("/persons/{id}")
     public PersonEntity updatePerson(@PathVariable("id") final Integer id, @RequestBody Map<String, Object> request) throws RequestParseException {
         return personService.updatePerson(id, request);
     }

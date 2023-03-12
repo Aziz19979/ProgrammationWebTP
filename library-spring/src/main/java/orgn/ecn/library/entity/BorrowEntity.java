@@ -14,7 +14,7 @@ public class BorrowEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "borrow_id", nullable = false)
-    private int borrowId;
+    private Integer borrowId;
     @Basic
     @Column(name = "borrow_date", nullable = false)
     private Date borrowDate;
@@ -23,10 +23,10 @@ public class BorrowEntity {
     private Date borrowReturn;
     @Basic
     @Column(name = "person_id", nullable = false)
-    private int personId;
+    private Integer personId;
     @Basic
     @Column(name = "book_id", nullable = false)
-    private int bookId;
+    private Integer bookId;
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "person_id",
     insertable = false, updatable = false, nullable = false)
