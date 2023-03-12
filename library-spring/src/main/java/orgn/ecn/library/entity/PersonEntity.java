@@ -1,5 +1,6 @@
 package orgn.ecn.library.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +26,8 @@ public class PersonEntity {
     @Basic
     @Column(name = "person_lastname", nullable = false, length = 128)
     private String personLastname;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "person")
     private List<BorrowEntity> borrows;
 }
