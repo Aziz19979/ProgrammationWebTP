@@ -34,7 +34,9 @@ export default class EntityTemplate {
                 width: field.width ? field.width : 150,
                 valueGetter: field.valueGetter ? field.valueGetter : undefined,
                 valueFormatter: field.valueFormatter ? field.valueFormatter : undefined,
+                valueSetter: field.valueSetter ? field.valueSetter : undefined,
                 valueOptions: field.valueOptions ? field.valueOptions : undefined,
+                editable: !this.isReadOnly && field.editable === undefined ? true : field.editable,
             }
         });
     }

@@ -9,10 +9,11 @@ import {
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {CrudTableProps} from "./types";
+import AddIcon from '@mui/icons-material/Add';
+import ApprovalIcon from '@mui/icons-material/Approval';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SecurityIcon from '@mui/icons-material/Security';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import TransitionAlert from "./TransitionAlert";
+import TransitionAlert from "../util/TransitionAlert";
 import DeleteEntityDialog from "./DeleteEntityDialog";
 import {IconButton, Typography} from "@mui/material";
 
@@ -92,7 +93,7 @@ export default function CrudTable(props: CrudTableProps) {
             const entity = targetRow.row;
             entityTemplate.crudActions.create(entity)
                 .then(r => {
-                    setRows((rows) => [...rows, entityTemplate.convertDataToGridRow(r.data)]);
+                    setRows((rows) => [entityTemplate.convertDataToGridRow(r.data), ...rows.filter((row) => row?.isFake !== true)]);
                     setSuccessMsg(`Created ${entityTemplate.entityLabel} with id ${r.data[entityTemplate.entityIdentifier.name]}`);
                 }).catch(e => {
                 console.log(e)
@@ -116,53 +117,74 @@ export default function CrudTable(props: CrudTableProps) {
                     field: 'actions',
                     type: 'actions',
                     width: 80,
-                    getActions: (params) => [
-                        <GridActionsCellItem
-                            key="delete"
-                            icon={<DeleteIcon/>}
-                            label="Delete"
-                            onClick={showDeleteEntityDialog(params)}
-                        />,
-                        <GridActionsCellItem
-                            key="update"
-                            icon={<SecurityIcon/>}
-                            label="Update Entity"
-                            onClick={updateEntity(params)}
-                            showInMenu
-                        />,
-                        <GridActionsCellItem
-                            key="copy"
-                            icon={<FileCopyIcon/>}
-                            label="Duplicate Entity"
-                            onClick={copyEntity(params)}
-                            showInMenu
-                        />,
-                    ],
+                    getActions: (params) => {
+                        if (params.row.isFake) {
+                            return [
+                                <GridActionsCellItem
+                                    key="create"
+                                    icon={<AddIcon/>}
+                                    label="Create Entity"
+                                    onClick={copyEntity(params)}
+                                />,
+                            ]
+                        } else {
+                            return [
+                                <GridActionsCellItem
+                                    key="delete"
+                                    icon={<DeleteIcon/>}
+                                    label="Delete"
+                                    onClick={showDeleteEntityDialog(params)}
+                                />,
+                                <GridActionsCellItem
+                                    key="update"
+                                    icon={<ApprovalIcon/>}
+                                    label="Update Entity"
+                                    onClick={updateEntity(params)}
+                                    showInMenu
+                                />,
+                                <GridActionsCellItem
+                                    key="copy"
+                                    icon={<FileCopyIcon/>}
+                                    label="Duplicate Entity"
+                                    onClick={copyEntity(params)}
+                                    showInMenu
+                                />,
+                            ]
+                        }
+                    },
                 }
             ]
         },
         [readOnly, entityTemplate, showDeleteEntityDialog, updateEntity, copyEntity],
     );
 
-    return (
-        <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                    sx={{
-                        p: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 120,
-                    }}
-                >
-                    <Typography variant="h6" gutterBottom component="div">
-                        List of {entityTemplate.entityLabelPlural}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom component="div">
-                        Total: {rows.length}
-                    </Typography>
-                </Paper>
+    function addEmptyRow() {
+        const emptyRow = {
+            id: Date.now(),
+            isFake: true,
+        };
+        setRows((rows) => [emptyRow, ...rows]);
+    }
+
+return (
+    <Grid container spacing={3}>
+        {/* Chart */}
+        <Grid item xs={12} md={8} lg={9}>
+            <Paper
+                sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 120,
+                }}
+            >
+                <Typography variant="h6" gutterBottom component="div">
+                    List of {entityTemplate.entityLabelPlural}
+                </Typography>
+                <Typography variant="h6" gutterBottom component="div">
+                    Total: {rows.length}
+                </Typography>
+            </Paper>
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3} hidden={readOnly}>
@@ -180,7 +202,7 @@ export default function CrudTable(props: CrudTableProps) {
                     <IconButton
                         aria-label="create"
                         onClick={() => {
-                            console.log("create")
+                            addEmptyRow();
                         }}
                     >
                         <GridAddIcon/>

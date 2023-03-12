@@ -86,7 +86,8 @@ public class RequestParser {
     }
 
     public static java.sql.Date getAsDate(Object date) throws RequestParseException {
-        return getAsDate(date, DEFAULT_DATE_FORMAT);
+        String dateWithoutTime = getAsString(date).split("T")[0];
+        return getAsDate(dateWithoutTime, DEFAULT_DATE_FORMAT);
     }
 
     public static java.sql.Date getAsDate(Object date, String dateFormat) throws RequestParseException {

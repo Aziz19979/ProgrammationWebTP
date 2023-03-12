@@ -6,10 +6,10 @@ import SignIn from "./components/auth/SignIn";
 import MyDashboard from "./components/dashboard/MyDashboard";
 import AppLayout from "./AppLayout";
 import NotFoundPage from "./components/NotFoundPage";
-import CrudTable from "./components/util/CrudTable";
 import bookEntity from "./service/book/BookEntity";
 import personEntity from "./service/person/PersonEntity";
 import bookGenreEntity from "./service/book-genre/BookGenreEntity";
+import CrudTable from "./components/generic-entity/CrudTable";
 
 function App() {
     return (

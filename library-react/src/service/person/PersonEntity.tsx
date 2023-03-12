@@ -8,7 +8,8 @@ class PersonEntity extends EntityTemplate {
         name: "personId",
         inputType: "number",
         label: "Person Id",
-        gridColType: "number"
+        gridColType: "number",
+        editable: false,
     };
 
     constructor() {

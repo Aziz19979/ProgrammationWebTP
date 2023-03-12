@@ -5,7 +5,13 @@ import bookGenreEntity from "../book-genre/BookGenreEntity";
 
 
 class BookEntity extends EntityTemplate {
-    private static bookIdentifier:FieldInterface = {name: "bookId", inputType: "number", label: "Book Id", gridColType: "number"};
+    private static bookIdentifier:FieldInterface = {
+        name: "bookId",
+        inputType: "number",
+        label: "Book Id",
+        gridColType: "number",
+        editable: false,
+    };
 
     constructor() {
         super("Book",
@@ -16,14 +22,24 @@ class BookEntity extends EntityTemplate {
                 BookEntity.bookIdentifier,
                 {name: "bookTitle", inputType: "string", label: "Title", width: 300},
                 {name: "bookAuthors", inputType: "string", label: "Authors", width: 300},
-                {name: "bookGenreId", inputType: "number", label: "Genre", gridColType: "number", visible: false,},
+                {
+                    name: "bookGenreId",
+                    inputType: "number",
+                    label: "Genre Id",
+                    gridColType: "number",
+                    visible: false,
+                },
                 {
                     name: "bookGenre", inputType: "select", label: "Genre",
                     gridColType: "singleSelect",
-                    valueGetter: params => bookGenreEntity.getAndCache(params.row.bookGenreId)?.bookGenreName,
+                    valueGetter: params => params.row.bookGenreId,
+                    valueFormatter: params => bookGenreEntity.getAndCache(params.value)?.bookGenreName,
+                    valueSetter: params => {
+                        return {...params.row, bookGenreId: params.value}
+                    },
                     valueOptions: () => {
                         return bookGenreEntity.getAllCached().map((bookGenre: any) => {
-                            return {value: bookGenre.bookGenreName, label: bookGenre.bookGenreName}
+                            return {value: bookGenre.bookGenreId, label: bookGenre.bookGenreName}
                         })
                     }
                 }

@@ -8,7 +8,8 @@ class BookGenreEntity extends TypeEntityTemplate {
         name: "bookGenreId",
         inputType: "number",
         label: "BookGenre Id",
-        gridColType: "number"
+        gridColType: "number",
+        editable: false,
     };
 
     constructor() {
