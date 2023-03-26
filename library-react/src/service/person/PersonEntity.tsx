@@ -1,9 +1,10 @@
 import EntityTemplate from "../util/EntityTemplate";
 import {API_URL} from "../../const/CommonConstants";
 import {FieldInterface} from "../util/types";
+import TypeEntityTemplate from "../util/TypeEntityTemplate";
 
 
-class PersonEntity extends EntityTemplate {
+class PersonEntity extends TypeEntityTemplate {
     private static personIdentifier: FieldInterface = {
         name: "personId",
         inputType: "number",
@@ -32,4 +33,5 @@ class PersonEntity extends EntityTemplate {
 
 const personEntity = new PersonEntity();
 
+personEntity.initializeCache();
 export default personEntity;

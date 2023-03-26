@@ -2,9 +2,10 @@ import EntityTemplate from "../util/EntityTemplate";
 import {API_URL} from "../../const/CommonConstants";
 import {FieldInterface} from "../util/types";
 import bookGenreEntity from "../book-genre/BookGenreEntity";
+import TypeEntityTemplate from "../util/TypeEntityTemplate";
 
 
-class BookEntity extends EntityTemplate {
+class BookEntity extends TypeEntityTemplate {
     private static bookIdentifier:FieldInterface = {
         name: "bookId",
         inputType: "number",
@@ -48,5 +49,7 @@ class BookEntity extends EntityTemplate {
 }
 
 const bookEntity = new BookEntity();
+
+bookEntity.initializeCache();
 
 export default bookEntity;
