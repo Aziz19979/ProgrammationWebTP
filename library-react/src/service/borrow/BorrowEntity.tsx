@@ -53,7 +53,11 @@ class BorrowEntity extends EntityTemplate {
                         return {...params.row, bookId: params.value}
                     },
                     valueOptions: () => {
-                        return bookEntity.getAllCached().map((book: any) => {
+                        bookEntity.initializeCache();
+                        return bookEntity
+                            .getAllCached()
+                            .filter(book => book.bookAvailable === 1)
+                            .map((book: any) => {
                             return {value: book.bookId, label: book.bookTitle}
                         })
                     }
