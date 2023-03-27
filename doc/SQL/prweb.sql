@@ -178,8 +178,8 @@ CREATE SEQUENCE borrow_borrow_id_seq
 CREATE TABLE borrow (
                         borrow_id INTEGER NOT NULL DEFAULT nextval('borrow_borrow_id_seq'::regclass),
                         borrow_date DATE NOT NULL,
-                        borrow_return DATE NOT NULL,
-                        finish_reading BOOLEAN NOT NULL,
+                        borrow_return DATE,
+                        finish_reading BOOLEAN,
                         person_id INTEGER NOT NULL,
                         book_id INTEGER NOT NULL,
                         CONSTRAINT borrow_id PRIMARY KEY (borrow_id)

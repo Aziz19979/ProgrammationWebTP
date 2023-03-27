@@ -1,17 +1,11 @@
 import EntityTemplate from "../util/EntityTemplate";
 import {API_URL} from "../../const/CommonConstants";
 import {FieldInterface} from "../util/types";
-import bookGenreEntity from "../book-genre/BookGenreEntity";
 import bookEntity from "../book/BookEntity";
 import personEntity from "../person/PersonEntity";
 
 
 class BorrowEntity extends EntityTemplate {
-    //         "borrowId": 22,
-    //         "borrowDate": "2015-01-01",
-    //         "borrowReturn": "2015-01-15",
-    //         "personId": 22,
-    //         "bookId": 22,
     private static borrowIdentifier: FieldInterface = {
         name: "borrowId",
         inputType: "number",
@@ -33,7 +27,8 @@ class BorrowEntity extends EntityTemplate {
                     name: "personne", inputType: "select", label: "Personne",
                     gridColType: "singleSelect",
                     valueGetter: params => params.row.bookId,
-                    valueFormatter: params => personEntity.getAndCache(params.value)?.personFirstname + " " + personEntity.getAndCache(params.value)?.personLastname,
+                    valueFormatter: params => personEntity.getAndCache(params.value)?.personFirstname
+                        + " " + personEntity.getAndCache(params.value)?.personLastname,
                     valueSetter: params => {
                         return {...params.row, personId: params.value}
                     },
@@ -47,6 +42,7 @@ class BorrowEntity extends EntityTemplate {
                 {
                     name: "book", inputType: "select", label: "Book",
                     gridColType: "singleSelect",
+                    width: 300,
                     valueGetter: params => params.row.bookId,
                     valueFormatter: params => bookEntity.getAndCache(params.value)?.bookTitle,
                     valueSetter: params => {

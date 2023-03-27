@@ -19,10 +19,10 @@ public class BorrowEntity {
     @Column(name = "borrow_date", nullable = false)
     private Date borrowDate;
     @Basic
-    @Column(name = "borrow_return", nullable = false)
+    @Column(name = "borrow_return")
     private Date borrowReturn;
     @Basic
-    @Column(name = "finish_reading", nullable = false)
+    @Column(name = "finish_reading")
     private Boolean finishReading;
 
     @Basic
