@@ -43,13 +43,6 @@ class BookEntity extends TypeEntityTemplate {
                             return {value: bookGenre.bookGenreId, label: bookGenre.bookGenreName}
                         })
                     }
-                },
-                {
-                    name: "bookAvailable",
-                    inputType: "bool",
-                    label: "Available",
-                    gridColType: "boolean",
-                    valueGetter: params => params.row.bookAvailable === 1,
                 }
             ]);
     }

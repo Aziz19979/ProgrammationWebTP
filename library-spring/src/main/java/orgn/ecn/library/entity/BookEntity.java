@@ -28,10 +28,6 @@ public class BookEntity {
     @Column(name = "book_genre_id", nullable = false)
     private Integer bookGenreId;
 
-    @Basic
-    @Column(name = "book_available", nullable = false)
-    private Integer bookAvailable;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "book_genre_id", referencedColumnName = "book_genre_id",

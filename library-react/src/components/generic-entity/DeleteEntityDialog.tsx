@@ -41,7 +41,7 @@ export default function DeleteEntityDialog(props: DeleteEntityDialogProps) {
             >
                 <DialogTitle>Are you sure you want to delete this {props.entityTemplate.entityLabel} ? </DialogTitle>
                 <DialogContent>
-                    {/*<EntityAsList targetRow={props.targetRow} entityTemplate={props.entityTemplate}/>*/}
+                    <EntityAsList targetRow={props.targetRow} entityTemplate={props.entityTemplate}/>
                 </DialogContent>
                 <DialogActions>
                     {/*make button group*/}

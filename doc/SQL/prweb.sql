@@ -58,7 +58,6 @@ CREATE TABLE book (
                       book_title VARCHAR(2560) NOT NULL,
                       book_authors VARCHAR(256) NOT NULL,
                       book_genre_id INTEGER NOT NULL,
-                      book_available INTEGER NOT NULL DEFAULT 1,
                       CONSTRAINT book_id PRIMARY KEY (book_id)
 );
 
@@ -179,7 +178,7 @@ CREATE SEQUENCE borrow_borrow_id_seq
 CREATE TABLE borrow (
                         borrow_id INTEGER NOT NULL DEFAULT nextval('borrow_borrow_id_seq'::regclass),
                         borrow_date DATE NOT NULL,
-                        borrow_return DATE,
+                        borrow_return DATE NOT NULL,
                         finish_reading BOOLEAN NOT NULL,
                         person_id INTEGER NOT NULL,
                         book_id INTEGER NOT NULL,
@@ -200,6 +199,39 @@ ALTER TABLE borrow ADD CONSTRAINT person_borrow_fk
         ON DELETE NO ACTION
         ON UPDATE NO ACTION
         NOT DEFERRABLE;
+
+
+-- feed initial borrow data
+INSERT INTO borrow (borrow_id, borrow_date, borrow_return, finish_reading, person_id, book_id)
+VALUES (1, '2015-01-01', '2015-01-15', false, 1, 1),
+       (2, '2015-01-01', '2015-01-15', false, 2, 2),
+       (3, '2015-01-01', '2015-01-15', true, 3, 3),
+       (4, '2015-01-01', '2015-01-15', true, 4, 4),
+       (5, '2015-01-01', '2015-01-15', true, 5, 5),
+       (6, '2015-01-01', '2015-01-15', false, 6, 6),
+       (7, '2015-01-01', '2015-01-15', false, 7, 7),
+       (8, '2015-01-01', '2015-01-15', false, 8, 8),
+       (9, '2015-01-01', '2015-01-15', false, 9, 9),
+       (10, '2015-01-01', '2015-01-15', false, 10, 10),
+       (11, '2015-01-01', '2015-01-15', false, 11, 11),
+       (12, '2015-01-01', '2015-01-15', false, 12, 12),
+       (13, '2015-01-01', '2015-01-15', false, 13, 13),
+       (14, '2015-01-01', '2015-01-15', false, 14, 14),
+       (15, '2015-01-01', '2015-01-15', true, 15, 15),
+       (16, '2015-01-01', '2015-01-15', true, 16, 16),
+       (17, '2015-01-01', '2015-01-15', true, 17, 17),
+       (18, '2015-01-01', '2015-01-15', false, 18, 18),
+       (19, '2015-01-01', '2015-01-15', false, 19, 19),
+       (20, '2015-01-01', '2015-01-15', false, 20, 20),
+       (21, '2015-01-01', '2015-01-15', true, 21, 21),
+       (22, '2015-01-01', '2015-01-15', true, 22, 22),
+       (23, '2015-01-01', '2015-01-15', true, 23, 23),
+       (24, '2015-01-01', '2015-01-15', false, 24, 24),
+       (25, '2015-01-01', '2015-01-15', false, 25, 25),
+       (26, '2015-01-01', '2015-01-15', true, 26, 26),
+       (27, '2015-01-01', '2015-01-15', false, 27, 27);
+
+SELECT setval('borrow_borrow_id_seq', 27, true);
 
 
 CREATE SEQUENCE user_id_seq

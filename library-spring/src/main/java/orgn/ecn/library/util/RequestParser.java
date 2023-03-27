@@ -90,14 +90,6 @@ public class RequestParser {
         return getAsDate(dateWithoutTime, DEFAULT_DATE_FORMAT);
     }
 
-    public static java.sql.Date getAsDateOrDefault(Object date, java.sql.Date defaultValue) {
-        try {
-            return getAsDate(date);
-        } catch (RequestParseException e) {
-            return defaultValue;
-        }
-    }
-
     public static java.sql.Date getAsDate(Object date, String dateFormat) throws RequestParseException {
         Date returnedValue = null;
         // try to convert
@@ -110,11 +102,11 @@ public class RequestParser {
         return new java.sql.Date(returnedValue.getTime());
     }
 
-    public static Boolean getAsBoolean(Object bool) {
+    public static Boolean getAsBoolean(Object bool) throws RequestParseException {
         if (bool instanceof Boolean)
             return (Boolean) bool;
         else if (bool instanceof String) {
             return Boolean.parseBoolean((String) bool);
-        } else return false;
+        } else throw new RequestParseException("Error while parsing boolean");
     }
 }
